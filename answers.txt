@@ -1,0 +1,8 @@
+a) Getting into all the articles would take about 15 minutes.
+afterwards, searching (with ctrl + f of course...) on each article would take about one more minuet (each site). 
+there are about 54 site on the website (correct to the time writing this answer) so about 69 minuets in total, which means much less than it took us to write this script (if there were few thousand articles maybe it would have been better...)
+
+b) We can use to automate tests of a new software, lab results, and many other things. If the numbers are really high then it can save a lot of time using such script.
+
+c) If we want to do this process hourly, we could use "watch" with a time interval of one hour.
+if we would like to skip the articles we already visited we can check (by a script of course) if the article's link is in our bash history. only if it isn't we would search it.
