@@ -4,29 +4,30 @@
 base=$(wget https://www.ynetnews.com/category/3082 -q -O -) 
 link=https://www.ynetnews.com/article/
 results=""
-net="Netanyahu"
-gan="Gantz"
-#making b (var) the correct list: search the file for l (var)
-#and the right suffix, remove the last character (" or #) and duplicated lines
-#loop, running through all the addresses in b (var) 
+n_name="Netanyahu"
+g_name="Gantz"
+
+#making base the correct list: search the file for relevant links and the right
+#suffix, remove the last character (" or #) and duplicated lines
+#loop: running through all the addresses in base.
 #counting the appearences of names in each address.
 #eventualy adds the names and amount to each address in the variable.
 while IFS= read -r line; do
 	article=$(wget $line -q -O -)
-	n=`echo $article|grep -o "$net" | wc -l `
-	g=`echo $article|grep -o "$gan"| wc -l`
+	num_n=`echo $article|grep -o "$n_name" | wc -l`
+	num_g=`echo $article|grep -o "$g_name"| wc -l`
 	results+="\n"
-	if (($n==0 && $g==0));then
+	if (($num_n==0 && $num_g==0));then
 		results+=`echo $line, "-"`
 	else
-		results+=`echo $line, "$net", $n, "$gan", $g`
+		results+=`echo $line, "$n_name", $num_n, "$g_name", $num_g`
 	fi
 done <<< `echo $base|grep -o -P "$link.{0,9}[\"#]" | uniq | sed 's/.$//'` 
 
-#puting the var data into the desired file
+#puting the results data into a desired file
 echo -e $results > results.csv
 
 #adding the amount of articles to the beggining of the list 
-#(decreasing the first line).
+#(decreasing the first line which is blank).
 temp=`wc -l < results.csv`
 wc -l < results.csv | sed -i "1c$((--temp))" results.csv
